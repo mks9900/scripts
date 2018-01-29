@@ -6,6 +6,8 @@
 # --delete tar bort filer vid målet som ej finns i källan.
 #
 
+# En ny kommentar, test github
+
 SourceBase=$HOME
 AllPath=Pictures
 YearPath="$AllPath/Fotografier"

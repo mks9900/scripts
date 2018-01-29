@@ -3,7 +3,7 @@
 echo "Vill du synka?"
 select sync in  Ja Nej; do
     case $sync in
-	Ja ) echo "Ok, synkar portage."; sudo emerge --sync --quiet;break;;
+	Ja ) echo "Ok, synkar portage och layman."; sudo layman -S && sudo emerge --sync --quiet;break;;
 	Nej ) echo "Ok, hoppar över synkningen.";break;;
     esac
 done

@@ -13,7 +13,7 @@ Source=$HOME/Music
 Target=$HOME/backup_nas/
 DevSource="//ng-nas/backup"
 Try="`cat /etc/mtab |grep backup_nas|awk '{print $1}'|grep ng-nas`"
-Lacie_1000=/media/LACIE1000GB/backup/Musik
+Lacie_1000=/media/johan/LACIE1000GB/backup/Musik
 
 echo "Till vilken enhet vill du säkerhetskopiera?"
 select enhet in Alla NAS Lacie1000; do

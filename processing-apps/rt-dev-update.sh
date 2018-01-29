@@ -91,7 +91,7 @@ fi
 
 #
 datum=`date --rfc-3339=date`
-tid=`date |awk '{print $4}'|sed -e 's/:/_/g'`
+tid=`date |awk '{print $5}'|sed -e 's/:/_/g'`
 
 cd $source
 

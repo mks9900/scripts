@@ -9,30 +9,30 @@
 #
 # Definitioner:
 #
-Source=$HOME/Documents
-Try="`cat /etc/mtab|awk '{print $1}'|grep dokument`"
-DevSource="//ng-nas/dokument"
+Source=$HOME/Dokument
+DevSource="//ng-nas/backup"
+TRY="`cat /etc/mtab |grep backup_nas|awk '{print $1}'|grep ng-nas`"
 NgNas=/home/johan/backup_nas
-Lacie_1T=/media/LACIE1TB/backup
-ExtDiskTwo=/media/backup-ext/backup
-
+Lacie_1T=/media/johan/LACIE1TB/backup
+ExtDiskTwo=/media/johan/backup-ext/backup
+Dropbox=$HOME/cloud-storage/Dropbox
 #
 # Slut definitioner
 #
 
 echo "Till vilken enhet vill du säkerhetskopiera?"
-select enhet in Alla NAS Lacie1T ExtDiskTwo; do
+select enhet in Alla NAS Lacie1T ExtDiskTwo Dropbox; do
     case $enhet in
 	Alla ) echo "Säkerhetskopierar till alla backup-enheter.";
 	       # Synka till ng-nas om den är monterad, annars avbryt:
 	       echo "=========================================================="
 	       echo "Speglar till ng-nas:"
 	       echo "=========================================================="
-	       if [ "$DevSource" = "$Try" ]; then
+	       if [ "$DevSource" = "//ng-nas/backup" ]; then
 		   /usr/bin/rsync -hlrtvz --delete $Source $NgNas
 		   Nas_Success=1; 
 	       else
-		   echo "Enheten $DevSource är ej monterad på $Source. Avbryter."
+		   echo "Enheten $DevSource är ej monterad på $NgNas. Avbryter."
 		   Nas_Success=0
 	       fi
 
@@ -64,17 +64,31 @@ select enhet in Alla NAS Lacie1T ExtDiskTwo; do
 		   ExtDiskTwo_Success=0
 	       fi
 
+	       # Synka till Dropbox om den är monterad, annars avbryt:
+	       if [ -d "$Dropbox" ]; then
+		   echo "=========================================================="
+		   echo "Speglar till Dropbox:"
+		   echo "=========================================================="
+		   /usr/bin/rsync -hlrtvz --progress --delete $Source $Dropbox
+		   Dropbox_Success=1; 
+	       else
+		   echo "=========================================================="
+		   echo "Dropbox är ej monterad, synkar ej denna."
+		   echo "=========================================================="
+		   Dropbox_Success=0
+	       fi
+
  	       break;;
 
 	NAS ) echo "=========================================================="
 	      echo "Speglar till ng-nas:"
 	      echo "=========================================================="
 	      # Synka till ng-nas om den är monterad, annars avbryt:
-	       if [ "$DevSource" = "$Try" ]; then
-		   /usr/bin/rsync -lrtvz --delete $Source $NgNas
+	       if [ "$DevSource" = "//ng-nas/backup" ]; then #Try
+		   /usr/bin/rsync -hlrtvz --delete $Source $NgNas
 		   Nas_Success=1; 
 	       else
-		   echo "Enheten $DevSource är ej monterad på $Source. Synkar ej denna."
+		   echo "Enheten $DevSource är ej monterad på $NgNas. Synkar ej denna."
 		   Nas_Success=0
 	       fi
 	       break;;
@@ -84,7 +98,7 @@ select enhet in Alla NAS Lacie1T ExtDiskTwo; do
 		    echo "=========================================================="
 		    # Synka till lacie1000 om den är monterad, annars avbryt:
 		    if [ -d "$Lacie_1T" ]; then
-			/usr/bin/rsync -lrtvz --delete $Source $Lacie_1T
+			/usr/bin/rsync -hlrtvz --delete $Source $Lacie_1T
 			Lacie_1T_Success=1; 
 		    else
 			echo "Lacie1000Gb-disken är ej monterad, synkar ej denna."
@@ -101,15 +115,33 @@ select enhet in Alla NAS Lacie1T ExtDiskTwo; do
 			 echo "=========================================================="
 			 echo "Speglar till ext-disk:"
 			 echo "=========================================================="
-			 /usr/bin/rsync -lrtvz --delete $Source $ExtDiskTwo
+			 /usr/bin/rsync -hlrtvz --delete $Source $ExtDiskTwo
 			 ExtDiskTwo_Success=1; 
 		     else
 			 echo "=========================================================="
 			 echo "Extdisk-disken är ej monterad, synkar ej denna."
 			 echo "=========================================================="
 			 ExtDiskTwo_Success=0
-		    fi
-		    
+		     fi
+		     break;;
+	
+	Dropbox ) echo "=========================================================="
+		  echo "Speglar till Dropbox:"
+		  echo "=========================================================="
+		  # Synka till Dropbox om den är monterad, annars avbryt:
+		  if [ -d "$Dropbox" ]; then
+		      echo "=========================================================="
+		      echo "Speglar till Dropbox:"
+		      echo "=========================================================="
+		      /usr/bin/rsync -hlrtvz --progress --delete $Source $Dropbox
+		      Dropbox_Success=1; 
+		  else
+		      echo "=========================================================="
+		      echo "Dropbox är ej monterad, synkar ej denna."
+		      echo "=========================================================="
+		      Dropbox_Success=0
+		  fi
+	    	  break;;
     esac
 done
 
@@ -121,4 +153,5 @@ echo
 echo " $Source till $NgNas: $Nas_Success"
 echo " $Source till $Lacie_1T: $Lacie_1T_Success"
 echo " $Source till $ExtDiskTwo: $ExtDiskTwo_Success"
+echo " $Source till $Dropbox: $Dropbox_Success"
 echo "=========================================================="

@@ -1,32 +1,37 @@
 #!/bin/bash
 #
-# progress-feedback? Via "uxterm -e 'kommando'"?
-#
-# Synkar från /home/johan/.config/darktable till NAS och usb-diskarna.
+# Synkar från hemkatalogens script-katalog till NAS och usb-diskarna.
 # --delete tar bort filer vid målet som ej finns i källan.
 #
 
-Source=$HOME/.local/share/shotwell/data
-Target=$HOME/backup_nas/shotwell
+# set -e
+
+#
+# Definitioner
+#
+Source=$HOME/scripts
+DevSource=$HOME/backup_nas/scripts
+Target=$HOME/backup_nas
 DevSource="//ng-nas/backup"
 Try="`cat /etc/mtab |grep backup_nas|awk '{print $1}'|grep ng-nas`"
 Lacie_1T=/media/johan/LACIE1TB/backup
 ExtDiskTwo=/media/johan/backup-ext/backup
-Dropbox=$HOME/cloud-storage/Dropbox/backup/shotwell
-GoogleDrive=$HOME/diverse/gdrive/backup/shotwell
+Dropbox=$HOME/cloud-storage/Dropbox/backup
+GoogleDrive=$HOME/diverse/gdrive/backup
 
-
+#
+# Kollar om NAS:en är monterad.
 if [ "$DevSource" = "$Try" ]; then
     echo "=========================================================="
     echo "Speglar till ng-nas:"
     echo "=========================================================="
-    /usr/bin/rsync -hlrtvz --progress --delete $Source $Target
+    /usr/bin/rsync -hlrvtz --progress --delete $Source $Target
     Nas_Success=1; 
 else
     echo "=========================================================="
     echo "Enheten $DevSource är ej monterad på $Source, synkar ej denna."
     echo "=========================================================="
-    Nas_Success=0
+    Nas_Success=0; 
 fi
 
 # Synka till Lacie1Tb om den är monterad, annars avbryt:
@@ -34,11 +39,11 @@ if [ -d "$Lacie_1T" ]; then
     echo "=========================================================="
     echo "Speglar till Lacie 1Tb:"
     echo "=========================================================="
-    /usr/bin/rsync -hlrtvz --progress --delete $Source $Lacie_1T
+    /usr/bin/rsync -hlrvtz --progress --delete $Source $Lacie_1T
     Lacie_1T_Success=1; 
 else
     echo "=========================================================="
-    echo "Lacie1000Gb-disken är ej monterad, synkar ej denna."
+    echo "Lacie1Tb-disken är ej monterad, synkar ej denna."
     echo "=========================================================="
     Lacie_1T_Success=0
 fi
@@ -48,7 +53,7 @@ if [ -d "$ExtDiskTwo" ]; then
     echo "=========================================================="
     echo "Speglar till ExtDiskTwo:"
     echo "=========================================================="
-    /usr/bin/rsync -hlrtvz --progress --delete $Source $ExtDiskTwo
+    /usr/bin/rsync -hlrtvz --progress --delete $Source $ExtDiskTwo    
     ExtDiskTwo_Success=1; 
 else
     echo "=========================================================="
@@ -85,7 +90,7 @@ else
     GoogleDrive_Success=0
 fi
 
-echo "Backup av Shotwell kördes den" `date` "till NAS ($Nas_Success), Lacie1T ($Lacie_1T_Success), ExtDiskTwo ($ExtDiskTwo), Dropbx ($Dropbox_Success), GoogleDrive ($GoogleDrive_Success)" >> ~/backup_dates_types.txt
+echo "Backup av scripten kördes den" `date` "till NAS ($Nas_Success), Lacie1Tb ($Lacie_1T_Success), ExtDiskTwo ($ExtDiskTwo), Dropbox ($Dropbox_Success), GoogleDrive ($GoogleDrive_Success)" >> ~/backup_dates_types.txt
 
 echo "=========================================================="
 echo " Sammanställning av synk av följande enheter enligt nedan:"

@@ -1,17 +1,14 @@
 #!/bin/bash
 
-Source1=/media/johan/"NIKON D700"/DCIM/
-Source2="100ND700"
+Source1=/media/johan/"NIKON D500"/DCIM/
+Source2="102ND500"
 Source="$Source1""$Source2"
-Target=$HOME/Pictures/Fotografier/import-d700-raw
+Target=$HOME/Pictures/Fotografier/import-d500-raw
 PhotoPath=$HOME/Pictures/Fotografier
 
 clear
 
 #set -e
-
-
-
 
 # Felhantering för mål- och källkataloger:
 if [ ! -d "$Source" ]; then
@@ -70,8 +67,8 @@ else
 		FocalLength="`exiv2 "$RawFile"|grep Focal|awk '{print $4}'|cut -d'.' -f1`"
 		ISOSpeed="`exiv2 "$RawFile"|grep "ISO speed"|awk '{print $4}'`"
 		Aperture="`exiv2 "$RawFile"|grep Aperture|awk '{print $3}'|grep F|sed -e s'/\./-/'|sed -e s'/F/f/'`" #Byt ut punkten mot _
-#		LensMaker="`exiv2 -pa "$RawFile"|grep "LensIDNumber"|awk '{print $4$5$6$7}'`"
-#		LensID="`exiv2 -pa "$RawFile"|grep "LensIDNumber"|awk '{print $7}'`"
+#		LensMaker="`exiv2 -pa "$RawFile"|grep "LensIDNumber"|awk '{print $4}'`"
+#		LensID="`exiv2 -pa "$RawFile"|grep "Exif.NikonLd3.LensIDNumber"|awk '{print $5"_"$6"-"$7}'`"
 		CameraMaker="`exiv2 "$RawFile"|grep "Camera model"|awk '{print $4}'|sed -e 's/:/-/g'`"
 		CameraModel="`exiv2 "$RawFile"|grep "Camera model"|awk '{print $5}'|sed -e 's/:/-/g'`"
 #		FileName=$FileDate"_kl-"$FileTime"_"$LensMaker"_"$FocalLength""mm_ISO$ISOSpeed"_"$Aperture
@@ -106,7 +103,7 @@ echo "==========================================================================
 
 for TempDir in *; do
     CurrentDirectory=$(pwd)
-    echo $pwd
+#    echo $pwd
     Year=`ls |sort|awk '{print $1}'|cut -c1-4|head -1`
     if [ ! -d "$PhotoPath"/"$Year"/"$TempDir" ]; then
 	echo "Katalogen $PhotoPath/$Year/$TempDir finns ej: Flyttar allt."

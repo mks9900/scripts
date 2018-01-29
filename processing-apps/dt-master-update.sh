@@ -10,8 +10,8 @@ Tstart="$(date +%s)"
 #
 # Definitioner:
 #
-source=$HOME/dt-src
-baseTargetPath=$HOME/dt_git
+source=$HOME/dt_src
+baseTargetPath=$HOME/dt-git
 
 cd $source
 
@@ -54,7 +54,8 @@ select svar in  Ja Nej; do
 		echo "Konfigurerar darktable:"
 		echo "====================================================================================="
 		#		cmake -DCMAKE_BUILD_TYPE=Release ..
-		$HOME/dt-src/build.sh --enable-openmp --enable-opencl --enable-tethering --enable-geo --enable-openexr --prefix /home/johan/dt-master
+		$source/build.sh --build-type Release --prefix /home/johan/dt_src/build --install --jobs 8 --enable-openmp --enable-opencl --enable-tethering --enable-geo --enable-openexr --enable-lua --disable-webp --disable-unity --disable-kwallet --disable-flickr
+
 		echo "====================================================================================="
 		break;;
         Nej ) echo "Ok, städar inte utan kör make install direkt nu.";
@@ -68,16 +69,46 @@ cd "$source"/build
 #
 echo "====================================================================================="
 echo "Kompilerar och installerar darktable i $source/build:"
-#make -j8
-sudo make -j8 install
+#make -j8 # BEHÖVS VERKLIGEN DETTA - GÖRS DET INTE I BUILD.SH OVAN?
 
 echo "====================================================================================="
-echo "Installationen i /usr/local klar."
+echo "Installationen i /home/johan/dt-git_master klar."
 
 #
 datum=`date --rfc-3339=date`
-tid=`date |awk '{print $4}'|sed -e 's/:/_/g'`
+tid=`date |awk '{print $5}'|sed -e 's/:/_/g'`
 
+cd $source
+
+#Ta reda på vilken gren vi använt denna gång:
+branch=$(git branch |awk '{print $2}')
+
+#Ta reda på gren och binärtyp vi använt denna gång:
+usedTarget="$baseTargetPath""_""$branch"
+
+#
+#echo "Flyttar katalogen från $source/build/ till $HOME och döper om den till $oldTarget-$datum-$tid."
+#
+
+# Egentligen samma som oldTarget, men snyggare så här:
+newTarget="$baseTargetPath""_""$branch"
+
+#
+# Kontroll om målkatalogen finns, annars skapas den:
+if [ ! -d "$usedTarget" ]; then
+    echo "==================================================================================="
+    echo "Katalogen" $usedTarget "finns ej, den skapas nu."
+    echo "==================================================================================="
+    mkdir -p "$usedTarget"
+    cp -r $source/build/* "$newTarget/"
+else
+    # Måste först döpa om den gamla installationen om den finns:
+    echo "Katalogen $usedTarget fanns. Döpte om den och går vidare nu."
+    mv $usedTarget $usedTarget"-"$datum"-"$tid
+    # Måste därefter skapa katalogen newTarget:
+    mkdir "$newTarget"
+    cp -r $source/build/* "$newTarget/"
+fi
 
 # Ta reda på och skriv ut tiden det tog att bygga allt:
 Ttotal="$(($(date +%s)-Tstart))"

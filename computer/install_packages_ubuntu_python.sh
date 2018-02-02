@@ -43,9 +43,9 @@ sudo add-apt-repository -y ppa:snwh/pulp
 
 # Installera Ubuntu-packages:
 sudo apt update
-sudo apt install geeqie gimp-edge mailspring python3 build-essential gimp-gmic mozo rawtherapee-unstable cifs-utils insync git
+sudo apt install geary geeqie gimp-edge python3 build-essential gimp-gmic mozo rawtherapee-unstable cifs-utils insync git
 
-sudo snap install spotify mailspring
+sudo snap install spotify
 
 # Installera Python modules:
 sudo -H pip3 install spyder pydotplus graphviz numpy scikit-learn scipy matplotlib python-tk python-language-server jupyter-core ipython

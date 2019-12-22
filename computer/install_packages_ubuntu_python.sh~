@@ -44,16 +44,12 @@ sudo add-apt-repository -y ppa:yg-jensge/shotwell-unstable
 sudo add-apt-repository -y ppa:geary-team/releases
 
 # Installera Ubuntu-packages:
-# Maple behöver lsb-base och lsb-core för att kunna aktivera sig!
 sudo apt update
-sudo apt install geeqie gimp-edge gimp-gmic mozo rawtherapee-unstable cifs-utils git texlive-lang-european texlive-bibtex-extra texlive-latex-extra texlive-fonts-extra texlive-xetex texlive-science hunspell-sv hyphen-sv texmaker libreoffice-help-sv mythes-sv hunspell caja-dropbox trash-cli tint2 openbox numlockx conky screengrab lxappearance gmrun feh suckless-tools lm-sensors gnome-raw-thumbnailer filezilla-theme-papirus ssh
-
-# För skrivaren:
-# hplip hplip-gui hplip-data hplip-doc hpijs-ppds libsane-hpaio printer-driver-hpcups printer-driver-hpijs
+sudo apt install geeqie gimp-edge python3 python3-pip python3-dev build-essential gimp-gmic mozo rawtherapee-unstable cifs-utils git texlive-lang-european texlive-bibtex-extra texlive-latex-extra texlive-fonts-extra texlive-xetex texlive-science hunspell-sv hyphen-sv texmaker libreoffice-help-sv mythes-sv hunspell caja-dropbox python-pkg-resources python-setuptools trash-cli tint2 openbox numlockx conky screengrab lxappearance gmrun feh suckless-tools libcublas9.1 libcusolver9.1 libcudart9.1 lm-sensors evolution-ews pidgin-sipe pidgin pidgin-themes pidgin-skype gnome-raw-thumbnailer
 
 # De två paketen python-pkg-resources python-setuptools behövs för Apples CoreML.
 
-sudo snap install hiri
+sudo snap install spotify hiri
 
 # Avinstallera lite program:
 sudo apt remove chromium-browser 
@@ -62,7 +58,7 @@ sudo apt remove chromium-browser
 
 # Installera Python modules:
 # Att installera tensorflow för GPU kräver lite annat. Se googles instruktioner.
-# pip3 install spyder pydotplus graphviz numpy scikit-learn scipy matplotlib python-language-server jupyter-core ipython tensorflow statsmodels seaborn sympy keras opencv-python mkl turicreate xgboost wordcloud pillow virtualenv virtualenvwrapper
+pip3 install spyder pydotplus graphviz numpy scikit-learn scipy matplotlib python-language-server jupyter-core ipython tensorflow statsmodels seaborn sympy keras opencv-python mkl turicreate xgboost wordcloud pillow virtualenv virtualenvwrapper
 
 # Ladda ner från respektive hemsida:
 # dropbox 

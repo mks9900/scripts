@@ -2,7 +2,7 @@
 
 # Flyttar alla sidecar-filer som ej har en tillhörande Nikon nef-fil till papperskorgen.
 
-RecursePath="$HOME/Pictures/Fotografier/"
+RecursePath="$HOME/Pictures/Fotografier"
 
 # För tester:
 #RecursePath="$HOME/tmp"
@@ -35,7 +35,7 @@ recurse ()
 		    if [[ ( -e "$FilePath"/"$SubNef" ) || ( -e "$FilePath"/"$SubNEF" ) ]] ; then
 			:
 		    else
-			/usr/bin/trash "$i"
+			/usr/bin/gio trash "$i"
 		    fi
 		fi
 	    else

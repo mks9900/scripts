@@ -6,16 +6,16 @@
 # --delete tar bort filer vid målet som ej finns i källan.
 #
 
-Source=/home/johan/.config/openbox
-Target=/home/johan/backup_nas
+Source=$HOME/Dropbox/coding
+Target=$HOME/backup_nas
 DevSource="//ng-nas/backup"
-TRY="`cat /etc/mtab |grep backup_nas|awk '{print $1}'|grep ng-nas`"
+Try="`cat /etc/mtab |grep backup_nas|awk '{print $1}'|grep ng-nas`"
 OneTB_ntfs=/media/johan/OneTB_ntfs/backup
 #ExtDiskTwo=/media/johan/backup-ext/backup
-Dropbox=$HOME/cloud-storage/Dropbox/backup
 #GoogleDrive=$HOME/gdrive/backup
+Dropbox=$HOME/Dropbox/backup
 
-if [ "$DevSource" = "$TRY" ]; then
+if [ "$DevSource" = "$Try" ]; then
     echo "=========================================================="
     echo "Speglar till ng-nas:"
     echo "=========================================================="
@@ -23,9 +23,9 @@ if [ "$DevSource" = "$TRY" ]; then
     Nas_Success=1; 
 else
     echo "=========================================================="
-    echo "Enheten $DevSource är ej monterad på $Source, synkar ej denna."
+    echo "Enheten $DevSource är ej monterad på $Source. Avbryter."
     echo "=========================================================="
-    Nas_Success=0; 
+    Nas_Success=0
 fi
 
 # Synka till OneTB_ntfs om den är monterad, annars avbryt:
@@ -37,18 +37,17 @@ if [ -d "$OneTB_ntfs" ]; then
     OneTB_ntfs_Success=1; 
 else
     echo "=========================================================="
-    echo "OneTB_ntfsGb-disken är ej monterad, synkar ej denna."
+    echo "Lacie1000Gb-disken är ej monterad, synkar ej denna."
     echo "=========================================================="
-    OneTB_ntfs_Success=0; 
+    OneTB_ntfs_Success=0
 fi
 
 # Synka till backup-ext om den är monterad, annars avbryt:
 #if [ -d "$ExtDiskTwo" ]; then
-#    /usr/bin/rsync -hlrtvz --progress --delete $Source $ExtDiskTwo
 #    echo "=========================================================="
 #    echo "Speglar till ExtDiskTwo:"
 #    echo "=========================================================="
-#    
+#    /usr/bin/rsync -hlrtvz --progress --delete $Source $ExtDiskTwo    
 #    ExtDiskTwo_Success=1; 
 #else
 #    echo "=========================================================="
@@ -72,23 +71,23 @@ else
 fi
 
 # Synka till GoogleDrive om den är monterad, annars avbryt:
-# if [ -d "$GoogleDrive" ]; then
-#     echo "=========================================================="
-#     echo "Speglar till GoogleDrive:"
-#     echo "=========================================================="
-#     /usr/bin/rsync -hlrtvz --progress --delete $Source $GoogleDrive
-#     GoogleDrive_Success=1; 
-# else
-#     echo "=========================================================="
-#     echo "GoogleDrive är ej monterad, synkar ej denna."
-#     echo "=========================================================="
-#     GoogleDrive_Success=0
-# fi
+#if [ -d "$GoogleDrive" ]; then
+#    echo "=========================================================="
+#    echo "Speglar till GoogleDrive:"
+#    echo "=========================================================="
+#    /usr/bin/rsync -hlrtvz --progress --delete $Source $GoogleDrive
+#    GoogleDrive_Success=1; 
+#else
+#    echo "=========================================================="
+#    echo "GoogleDrive är ej monterad, synkar ej denna."
+#    echo "=========================================================="
+#    GoogleDrive_Success=0
+#fi
 
+# echo "Bilder," `date`" till $enhet" >> ~/Backup_dates_disks.txt
 
-echo "Openbox, "`date` "till NAS ($Nas_Success), OneTB_ntfs ($OneTB_ntfs_Success), Dropbox ($Dropbox_Success)" >> ~/Backup_dates_disks.txt
-
-#echo "Openbox, "`date` "till NAS ($Nas_Success), OneTB_ntfs ($OneTB_ntfs_Success), ExtDiskTwo ($ExtDiskTwo_Success), Dropbox ($Dropbox_Success)" >> ~/Backup_dates_disks.txt
+echo "Darktable, "`date` "till NAS ($Nas_Success), OneTB_ntfs ($OneTB_ntfs_Success), Dropbox ($Dropbox_Success)" >> ~/Backup_dates_disks.txt
+#echo "Darktable, "`date` "till NAS ($Nas_Success), OneTB_ntfs ($OneTB_ntfs_Success), ExtDiskTwo ($ExtDiskTwo_Success), Dropbox ($Dropbox_Success)" >> ~/Backup_dates_disks.txt
 
 echo "=========================================================="
 echo " Sammanställning av synk av följande enheter enligt nedan:"
@@ -96,4 +95,5 @@ echo " $Source till $Target: $Nas_Success"
 echo " $Source till $OneTB_ntfs: $OneTB_ntfs_Success"
 #echo " $Source till $ExtDiskTwo: $ExtDiskTwo_Success"
 echo " $Source till $Dropbox: $Dropbox_Success"
+#echo " $Source till $GoogleDrive: $GoogleDrive_Success"
 echo "=========================================================="

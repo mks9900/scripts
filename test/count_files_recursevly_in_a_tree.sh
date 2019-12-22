@@ -2,7 +2,7 @@
 
 #clear
 
-RecursePath="/home/johan/Bilder/testfotografier/asp_to_dt_xmp"
+RecursePath="/home/johan/tmp"
 
 recurse ()
 {

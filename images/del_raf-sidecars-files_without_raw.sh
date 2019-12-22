@@ -36,7 +36,7 @@ recurse ()
 		    if [[ ( -e "$FilePath"/"$SubRaf" ) || ( -e "$FilePath"/"$SubRAF" ) ]] ; then
 			:
 		    else
-			/usr/bin/trash "$i"
+			/usr/bin/gio trash "$i"
 		    fi
 		fi
 	    else

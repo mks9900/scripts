@@ -1,7 +1,9 @@
 #!/bin/bash
 
-Source=/media/johan/disk/DCIM/102_FUJI
-Target=$HOME/Pictures/Fotografier/import-xt2-jpg
+Source1=/media/johan/"NIKON Z 6"/DCIM/
+Source2="100NCZ_6"
+Source="$Source1""$Source2"
+Target=$HOME/Pictures/Fotografier/import-z6-raw
 PhotoPath=$HOME/Pictures/Fotografier
 
 clear
@@ -27,13 +29,13 @@ else
 	
 	echo
 	echo "==================================================================================="
-	echo "Flyttar alla jpg-filer till målet:" #samt att vi kollar vad tiden är så vi kan räkna ut hur lång tid allt tog i slutet:
+	echo "Flyttar alla råfiler till målet:" #samt att vi kollar vad tiden är så vi kan räkna ut hur lång tid allt tog i slutet:
 	echo "==================================================================================="
 
 	Amount="`ls -s --block-size=M "$Source"|awk '{print $2}'|head -1|sed -e 's/M//'`"
 	Tstart="$(date +%s)"
 
-	cp -av "$Source"/*.JPG "$Target"
+	cp -av "$Source"/*.NEF "$Target"
 	echo "Nu är alla filer kopierade!"
 
 	Ttrans="$(($(date +%s)-Tstart))"
@@ -41,16 +43,16 @@ else
 	
 	cd "$Target"
 
-	Count=`ls -1 *.JPG 2>/dev/null | wc -l`
+	Count=`ls -1 *.NEF 2>/dev/null | wc -l`
 	echo
-	echo "Det finns $Count jpg-filer"
+	echo "Det finns $Count NEF-filer"
 	echo
 	echo
 	echo "==================================================================================="
 	echo "Sedan byts namnet på dem och filerna flyttas till rätt datumkatalog..."
 	echo "==================================================================================="
 
-# Felhantering för *.JPG finns nedan:
+# Felhantering för *.NEF finns nedan:
 
 	if [ $Count = 0 ]
 	then 
@@ -58,25 +60,28 @@ else
 	    exit; else
 
 	    Counter=1
-	    for jpgFile in "$Target"/*.JPG; do
+	    for RawFile in "$Target"/*.NEF; do
 
-		FileDate="`exiv2 "$jpgFile"|grep timestamp|awk '{print $4}'|sed -e 's/:/-/g'`"
+		FileDate="`exiv2 "$RawFile"|grep timestamp|awk '{print $4}'|sed -e 's/:/-/g'`"
 		FileTime="`exiv2 "$RawFile"|grep timestamp|awk '{print $5}'|sed -e 's/:/-/g'`" #|cut -c1-5`" #skär bort sekundrarna...
-		FocalLength="`exiv2 "$jpgFile"|grep Focal|awk '{print $4}'|cut -d'.' -f1`"
-		ISOSpeed="`exiv2 "$jpgFile"|grep "ISO speed"|awk '{print $4}'`"
-		Aperture="`exiv2 "$jpgFile"|grep Aperture|awk '{print $3}'|grep F|sed -e s'/\./-/'|sed -e s'/F/f/'`" #Byt ut punkten mot _
-#		CameraMaker="`exiv2 "$jpgFile"|grep "Camera make"|awk '{print $4}'|sed -e 's/:/-/g'`"
-		CameraModel="`exiv2 "$jpgFile"|grep "Camera model"|awk '{print $5}'|sed -e 's/:/-/g'`"
+		FocalLength="`exiv2 "$RawFile"|grep Focal|awk '{print $4}'|cut -d'.' -f1`"
+		ISOSpeed="`exiv2 "$RawFile"|grep "ISO speed"|awk '{print $4}'`"
+		Aperture="`exiv2 "$RawFile"|grep Aperture|awk '{print $3}'|grep F|sed -e s'/\./-/'|sed -e s'/F/f/'`" #Byt ut punkten mot _
+#		LensMaker="`exiv2 -pa "$RawFile"|grep "LensIDNumber"|awk '{print $4}'`"
+#		LensID="`exiv2 -pa "$RawFile"|grep "Exif.NikonLd3.LensIDNumber"|awk '{print $5"_"$6"-"$7}'`"
+		CameraMaker="`exiv2 "$RawFile"|grep "Camera model"|awk '{print $4}'|sed -e 's/:/-/g'`"
+		CameraModel="`exiv2 "$RawFile"|grep "Camera model"|awk '{print $5}'|sed -e 's/:/-/g'`"
+#		FileName=$FileDate"_kl-"$FileTime"_"$LensMaker"_"$FocalLength""mm_ISO$ISOSpeed"_"$Aperture
 		FileName=$FileDate"_kl"$FileTime"_"$CameraModel"_"$FocalLength"mm_"$Aperture"_ISO""$ISOSpeed"
 
 		if [ ! -d "$FileDate" ]; then
 		    Counter=1
 		    mkdir -p "$FileDate"
-		    echo "Flyttar $jpgFile till katalogen $FileDate."
-		    mv -v "$jpgFile" "$FileDate"/"$FileName""_"$Counter.jpg
+		    echo "Flyttar $RawFile till katalogen $FileDate."
+		    mv -v "$RawFile" "$FileDate"/"$FileName""_"$Counter.nef
 		    Counter=$[Counter + 1]
 		else
-		    mv -v "$jpgFile" "$FileDate"/"$FileName""_"$Counter.jpg
+		    mv -v "$RawFile" "$FileDate"/"$FileName""_"$Counter.nef
 		    echo "$FileDate"/"$FileName""_"$Counter.nef
 		    Counter=$[Counter + 1]		
 		fi
@@ -100,13 +105,13 @@ for TempDir in *; do
     CurrentDirectory=$(pwd)
 #    echo $pwd
     Year=`ls |sort|awk '{print $1}'|cut -c1-4|head -1`
-    if [ ! -d "$PhotoPath"/"$Year"/"$TempDir""_""X-T2_jpg" ]; then
-	echo "Katalogen $PhotoPath/$Year/$TempDir finns ej: Flyttar allt."
-	mv -vi "$TempDir"/ "$PhotoPath"/"$Year"/"$TempDir""_""X-T2_jpg"
+    if [ ! -d "$PhotoPath"/"$Year"/"$TempDir" ]; then
+	echo "Katalogen $PhotoPath/$Year/$TempDir finns ej: Flyttar..."
+	mv -vi "$TempDir"/ "$PhotoPath"/"$Year"
 	echo
     else
 	echo "Katalogen $PhotoPath/$Year/$TempDir finns: Kopierar..."
-	cp -ai "$TempDir"/*.jpg "$PhotoPath"/"$Year"/"$TempDir""_""X-T2_jpg"
+	cp -ai "$TempDir"/*.nef "$PhotoPath"/"$Year"/"$TempDir"
 	echo
     fi
 done

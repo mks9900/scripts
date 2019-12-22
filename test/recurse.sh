@@ -11,4 +11,4 @@ recurse ()
 	fi
     done
 }
-recurse /home/johan/Bilder/Fotografier/2013
+recurse /home/johan/tmp

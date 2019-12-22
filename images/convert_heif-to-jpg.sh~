@@ -1,0 +1,7 @@
+#!/sh
+
+cd /home/johan/Dropbox/Kamerauppladdningar/
+
+for i in *.heif; do
+    /usr/bin/heif-convert i i.jpg
+       

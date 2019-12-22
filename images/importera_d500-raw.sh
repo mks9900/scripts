@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Source1=/media/johan/"NIKON D500"/DCIM/
-Source2="102ND500"
+Source2="103ND500"
 Source="$Source1""$Source2"
 Target=$HOME/Pictures/Fotografier/import-d500-raw
 PhotoPath=$HOME/Pictures/Fotografier

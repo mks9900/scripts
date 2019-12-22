@@ -6,48 +6,26 @@
 # --delete tar bort filer vid målet som ej finns i källan.
 #
 
-# En ny kommentar, test github
-
 SourceBase=$HOME
 AllPath=Pictures
 YearPath="$AllPath/Fotografier"
 DevSource="//ng-nas/backup"
 TRY="`cat /etc/mtab |grep backup_nas|awk '{print $1}'|grep ng-nas`"
 NgNasBase=/home/johan/backup_nas
-Lacie1TBase=/media/johan/LACIE1TB/backup
+OneTB_ntfsBase=/media/johan/OneTB_ntfs/backup
 ExtDiskTwoBase=/media/johan/backup-ext/backup
-Dropbox=$HOME/cloud-storage/Dropbox
+#Dropbox=$HOME/cloud-storage/Dropbox
 
-#echo "Vilket år vill du säkerhetskopiera?"
-#select svar in  Allt 2001 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016; do
-#    case $svar in
-#               Allt ) echo "Ok, säkerhetskopierar år $svar."; Source="$SourceBase""/""$AllPath"; NgNas="$NgNasBase"; Lacie1T="$Lacie1TBase"; ExtDiskTwo="$ExtDiskTwoBase"; break;;
-#        2001 ) echo "Ok, säkerhetskopierar år $svar."; Source="$SourceBase""/""$YearPath""/""$svar"; NgNas="$NgNasBase""/""$YearPath""/""$svar"; Lacie1T="$Lacie1TBase""/""$YearPath""/""$svar";  ExtDiskTwo="$ExtDiskTwoBase""/""$YearPath""/""$svar"; break;;
-#	2004 ) echo "Ok, säkerhetskopierar år $svar."; Source="$SourceBase""/""$YearPath""/""$svar"; NgNas="$NgNasBase""/""$YearPath""/""$svar"; Lacie1T="$Lacie1TBase""/""$YearPath""/""$svar";  ExtDiskTwo="$ExtDiskTwoBase""/""$YearPath""/""$svar"; break;;
-#	2005 ) echo "Ok, säkerhetskopierar år $svar."; Source="$SourceBase""/""$YearPath""/""$svar"; NgNas="$NgNasBase""/""$YearPath""/""$svar"; Lacie1T="$Lacie1TBase""/""$YearPath""/""$svar";  ExtDiskTwo="$ExtDiskTwoBase""/""$YearPath""/""$svar"; break;;
-#       2006 ) echo "Ok, säkerhetskopierar år $svar."; Source="$SourceBase""/""$YearPath""/""$svar"; NgNas="$NgNasBase""/""$YearPath""/""$svar"; Lacie1T="$Lacie1TBase""/""$YearPath""/""$svar";  ExtDiskTwo="$ExtDiskTwoBase""/""$YearPath""/""$svar"; break;;
-#        2007 ) echo "Ok, säkerhetskopierar år $svar."; Source="$SourceBase""/""$YearPath""/""$svar"; NgNas="$NgNasBase""/""$YearPath""/""$svar"; Lacie1T="$Lacie1TBase""/""$YearPath""/""$svar";  ExtDiskTwo="$ExtDiskTwoBase""/""$YearPath""/""$svar"; break;;
-#	2008 ) echo "Ok, säkerhetskopierar år $svar."; Source="$SourceBase""/""$YearPath""/""$svar"; NgNas="$NgNasBase""/""$YearPath""/""$svar"; Lacie1T="$Lacie1TBase""/""$YearPath""/""$svar";  ExtDiskTwo="$ExtDiskTwoBase""/""$YearPath""/""$svar"; break;;
-#	2009 ) echo "Ok, säkerhetskopierar år $svar."; Source="$SourceBase""/""$YearPath""/""$svar"; NgNas="$NgNasBase""/""$YearPath""/""$svar"; Lacie1T="$Lacie1TBase""/""$YearPath""/""$svar";  ExtDiskTwo="$ExtDiskTwoBase""/""$YearPath""/""$svar"; break;;
-#	2010 ) echo "Ok, säkerhetskopierar år $svar."; Source="$SourceBase""/""$YearPath""/""$svar"; NgNas="$NgNasBase""/""$YearPath""/""$svar"; Lacie1T="$Lacie1TBase""/""$YearPath""/""$svar";  ExtDiskTwo="$ExtDiskTwoBase""/""$YearPath""/""$svar"; break;;
-#	2011 ) echo "Ok, säkerhetskopierar år $svar."; Source="$SourceBase""/""$YearPath""/""$svar"; NgNas="$NgNasBase""/""$YearPath""/""$svar"; Lacie1T="$Lacie1TBase""/""$YearPath""/""$svar";  ExtDiskTwo="$ExtDiskTwoBase""/""$YearPath""/""$svar"; break;;
-#	2012 ) echo "Ok, säkerhetskopierar år $svar."; Source="$SourceBase""/""$YearPath""/""$svar"; NgNas="$NgNasBase""/""$YearPath""/""$svar"; Lacie1T="$Lacie1TBase""/""$YearPath""/""$svar";  ExtDiskTwo="$ExtDiskTwoBase""/""$YearPath""/""$svar"; break;;
-#	2013 ) echo "Ok, säkerhetskopierar år $svar."; Source="$SourceBase""/""$YearPath""/""$svar"; NgNas="$NgNasBase""/""$YearPath""/""$svar"; Lacie1T="$Lacie1TBase""/""$YearPath""/""$svar";  ExtDiskTwo="$ExtDiskTwoBase""/""$YearPath""/""$svar"; break;;
-#	2014 ) echo "Ok, säkerhetskopierar år $svar."; Source="$SourceBase""/""$YearPath""/""$svar"; NgNas="$NgNasBase""/""$YearPath""/""$svar"; Lacie1T="$Lacie1TBase""/""$YearPath""/""$svar";  ExtDiskTwo="$ExtDiskTwoBase""/""$YearPath""/""$svar"; break;;
-#	2015 ) echo "Ok, säkerhetskopierar år $svar."; Source="$SourceBase""/""$YearPath""/""$svar"; NgNas="$NgNasBase""/""$YearPath""/""$svar"; Lacie1T="$Lacie1TBase""/""$YearPath""/""$svar";  ExtDiskTwo="$ExtDiskTwoBase""/""$YearPath""/""$svar"; break;;
-#	2016 ) echo "Ok, säkerhetskopierar år $svar."; Source="$SourceBase""/""$YearPath""/""$svar"; NgNas="$NgNasBase""/""$YearPath""/""$svar"; Lacie1T="$Lacie1TBase""/""$YearPath""/""$svar";  ExtDiskTwo="$ExtDiskTwoBase""/""$YearPath""/""$svar"; break;;
-#    esac
-#done
-
-Source="$SourceBase""/""$AllPath"
+#Source="$SourceBase""/""$AllPath"
+Source="/home/johan/cloud-storage/Dropbox/Pictures"
 NgNas="$NgNasBase"
-Lacie1T="$Lacie1TBase"
+OneTB_ntfs="$OneTB_ntfsBase"
 ExtDiskTwo="$ExtDiskTwoBase"
 
 echo "Till vilken enhet vill du säkerhetskopiera?"
-select enhet in Alla NAS Lacie1T ExtDiskTwo Dropbox; do 
+select enhet in Alla NAS OneTB_ntfs ExtDiskTwo; do # Dropbox; do 
     case $enhet in
-	Alla ) echo "Speglar till NAS, Lacie1T, ExtDiskTwo";
+	Alla ) echo "Speglar till NAS, OneTB_ntfs, ExtDiskTwo";
 	       # Synka först till ng-nas om den är monterad, annars avbryt:
 	       if [ "$DevSource" = "$TRY" ]; then
 		   echo "Säkerhetskopierar till alla backup-enheter.";
@@ -61,16 +39,17 @@ select enhet in Alla NAS Lacie1T ExtDiskTwo Dropbox; do
 		   echo "Enheten $DevSource är ej monterad på $Source. Avbryter."
 		   Nas_Success=0
 	       fi
-	       # Synka sedan till Lacie1Tb om den är monterad, annars avbryt:
-	       if [ -d "$Lacie1T" ]; then
+
+	       # Synka sedan till OneTB_ntfs om den är monterad, annars avbryt:
+	       if [ -d "$OneTB_ntfs" ]; then
 		   echo "=========================================================="
-		   echo "Speglar till Lacie 1 Tb:"
+		   echo "Speglar till OneTB_ntfs:"
 		   echo "=========================================================="
-		   /usr/bin/rsync -hlrtvz --exclude 'lost+found' --exclude '.Trash-1000' --delete $Source $Lacie1T
-		   Lacie1T_Success=1; 
+		   /usr/bin/rsync -hlrtvz --exclude 'lost+found' --exclude '.Trash-1000' --delete $Source "$OneTB_ntfs"
+		   OneTB_ntfs_Success=1; 
 	       else
-		   echo "Lacie1Tb-disken är ej monterad, synkar ej denna."
-		   Lacie1T_Success=0;
+		   echo "OneTB_ntfs-disken är ej monterad, synkar ej denna."
+		   OneTB_ntfs_Success=0;
 	       fi
 
 	       # Synka sedan till ExtDiskTwo om den är monterad, annars avbryt:
@@ -86,27 +65,30 @@ select enhet in Alla NAS Lacie1T ExtDiskTwo Dropbox; do
 	       fi
 
 	       # Synka till Dropbox om den är monterad, annars avbryt:
-	       if [ -d "$Dropbox" ]; then
-		   echo "=========================================================="
-		   echo "Speglar till Dropbox:"
-		   echo "=========================================================="
-		   /usr/bin/rsync -hlrtvz --progress --delete $Source $Dropbox
-		   Dropbox_Success=1; 
-	       else
-		   echo "=========================================================="
-		   echo "Dropbox är ej monterad, synkar ej denna."
-		   echo "=========================================================="
-		   Dropbox_Success=0
-	       fi
+#	       if [ -d "$Dropbox" ]; then
+#		   echo "=========================================================="
+#		   echo "Speglar till Dropbox:"
+#		   echo "=========================================================="
+#		   /usr/bin/rsync -hlrtvz --progress --delete $Source $Dropbox
+#		   Dropbox_Success=1; 
+#	       else
+#		   echo "=========================================================="
+#		   echo "Dropbox är ej monterad, synkar ej denna."
+#		   echo "=========================================================="
+#		   Dropbox_Success=0
+#	       fi
 	       
 	       break;;
 	
 	NAS ) echo "Speglar till NAS:en.";
 	      # Synka till ng-nas om den är monterad, annars avbryt:
 	      if [ "$DevSource" = "$TRY" ]; then
+		  echo "=========================================================="
+		  echo "Speglar till ng-nas:"
+		  echo "=========================================================="
 		  /usr/bin/rsync -hlrtvz --exclude 'lost+found' --exclude '.Trash-1000' --delete $Source $NgNas
-		  echo $Source/
-		  echo $NgNas/
+#		  echo $Source/
+#		  echo $NgNas/
 		  Nas_Success=1; 
 	      else
 		  echo "Enheten $DevSource är ej monterad på $Source. Avbryter."
@@ -114,17 +96,17 @@ select enhet in Alla NAS Lacie1T ExtDiskTwo Dropbox; do
 	      fi
 	      break;;
 	
-	Lacie1T ) echo "Speglar till Lacie1Tb.";
-		  # Synka till Lacie1Tb om den är monterad, annars avbryt:
-		  if [ -d "$Lacie1T" ]; then
+	OneTB_ntfs ) echo "Speglar till OneTB_ntfs.";
+		  # Synka till OneTB_ntfs om den är monterad, annars avbryt:
+		  if [ -d "$OneTB_ntfs" ]; then
 		      echo "=========================================================="
-		      echo "Speglar till Lacie 1 Tb:"
+		      echo "Speglar till OneTB_ntfs:"
 		      echo "=========================================================="
-		      /usr/bin/rsync -hlrtvz --exclude 'lost+found' --exclude '.Trash-1000' --delete $Source $Lacie1T
-		      Lacie1T_Success=1; 
+		      /usr/bin/rsync -hlrtvz --exclude 'lost+found' --exclude '.Trash-1000' --delete $Source "$OneTB_ntfs"
+		      OneTB_ntfs_Success=1; 
 		  else
-		      echo "Lacie1Tb-disken är ej monterad, synkar ej denna."
-		      Lacie1T_Success=0;
+		      echo "OneTB_ntfs-disken är ej monterad, synkar ej denna."
+		      OneTB_ntfs_Success=0;
 		  fi
 		  
 		  break;;
@@ -144,32 +126,31 @@ select enhet in Alla NAS Lacie1T ExtDiskTwo Dropbox; do
 		     
 		     break;;
 
-	Dropbox ) echo "Speglar till ExtDiskTwo.";
-		  # Synka till Dropbox om den är monterad, annars avbryt:
-		  if [ -d "$Dropbox" ]; then
-		      echo "=========================================================="
-		      echo "Speglar till Dropbox:"
-		      echo "=========================================================="
-		      /usr/bin/rsync -hlrtvz --progress --delete $Source $Dropbox
-		      Dropbox_Success=1; 
-		  else
-		      echo "=========================================================="
-		      echo "Dropbox är ej monterad, synkar ej denna."
-		      echo "=========================================================="
-		      Dropbox_Success=0
-		  fi
+#	Dropbox ) echo "Speglar till ExtDiskTwo.";
+#		  # Synka till Dropbox om den är monterad, annars avbryt:
+#		  if [ -d "$Dropbox" ]; then
+#		      echo "=========================================================="
+#		      echo "Speglar till Dropbox:"
+#		      echo "=========================================================="
+#		      /usr/bin/rsync -hlrtvz --progress --delete $Source $Dropbox
+#		      Dropbox_Success=1; 
+#		  else
+#		      echo "=========================================================="
+#		      echo "Dropbox är ej monterad, synkar ej denna."
+#		      echo "=========================================================="
+#		      Dropbox_Success=0
+#		  fi
 
-		  break;;
+#		  break;;
     esac
 done
 
-echo "Backup av bilderna kördes" `date` " till $enhet" >> ~/backup_dates_types.txt
+echo "Bilder," `date`" till $enhet" >> ~/Backup_dates_disks.txt
 
 echo "=========================================================="
 echo " Sammanställning av synk av följande enheter enligt nedan:"
 echo 
 echo " $Source till $NgNas: $Nas_Success"
-echo " $Source till $Lacie1T: $Lacie1T_Success"
+echo " $Source till $OneTB_ntfs: $OneTB_ntfs_Success"
 echo " $Source till $ExtDiskTwo: $ExtDiskTwo_Success"
-echo " $Source till $Dropbox: $Dropbox_Success"
 echo "=========================================================="

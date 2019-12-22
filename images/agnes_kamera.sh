@@ -1,8 +1,8 @@
 #!/bin/bash
 
-Source=/media/johan/disk/DCIM/102_FUJI
-Target=$HOME/Pictures/Fotografier/import-xt2-jpg
-PhotoPath=$HOME/Pictures/Fotografier
+Source=/media/johan/CANON_DC/DCIM/100CANON
+Target=$HOME/Pictures/Fotografier/import-agnes_kamera-jpg
+PhotoPath=$HOME/Pictures/Agnes_egna_bilder
 
 clear
 
@@ -66,7 +66,7 @@ else
 		ISOSpeed="`exiv2 "$jpgFile"|grep "ISO speed"|awk '{print $4}'`"
 		Aperture="`exiv2 "$jpgFile"|grep Aperture|awk '{print $3}'|grep F|sed -e s'/\./-/'|sed -e s'/F/f/'`" #Byt ut punkten mot _
 #		CameraMaker="`exiv2 "$jpgFile"|grep "Camera make"|awk '{print $4}'|sed -e 's/:/-/g'`"
-		CameraModel="`exiv2 "$jpgFile"|grep "Camera model"|awk '{print $5}'|sed -e 's/:/-/g'`"
+		CameraModel="`exiv2 "$jpgFile"|grep "Camera model"|awk '{print $4}'|sed -e 's/:/-/g'`"
 		FileName=$FileDate"_kl"$FileTime"_"$CameraModel"_"$FocalLength"mm_"$Aperture"_ISO""$ISOSpeed"
 
 		if [ ! -d "$FileDate" ]; then
@@ -77,7 +77,6 @@ else
 		    Counter=$[Counter + 1]
 		else
 		    mv -v "$jpgFile" "$FileDate"/"$FileName""_"$Counter.jpg
-		    echo "$FileDate"/"$FileName""_"$Counter.nef
 		    Counter=$[Counter + 1]		
 		fi
 
@@ -100,13 +99,13 @@ for TempDir in *; do
     CurrentDirectory=$(pwd)
 #    echo $pwd
     Year=`ls |sort|awk '{print $1}'|cut -c1-4|head -1`
-    if [ ! -d "$PhotoPath"/"$Year"/"$TempDir""_""X-T2_jpg" ]; then
+    if [ ! -d "$PhotoPath"/"$Year"/"$TempDir""_""Agnes_jpg" ]; then % fel?
 	echo "Katalogen $PhotoPath/$Year/$TempDir finns ej: Flyttar allt."
-	mv -vi "$TempDir"/ "$PhotoPath"/"$Year"/"$TempDir""_""X-T2_jpg"
+	mv -vi "$TempDir"/ "$PhotoPath"/"$Year"/"$TempDir""_""Agnes_jpg"
 	echo
     else
 	echo "Katalogen $PhotoPath/$Year/$TempDir finns: Kopierar..."
-	cp -ai "$TempDir"/*.jpg "$PhotoPath"/"$Year"/"$TempDir""_""X-T2_jpg"
+	cp -ai "$TempDir"/*.jpg "$PhotoPath"/"$Year"/"$TempDir""_""Agnes_jpg"
 	echo
     fi
 done

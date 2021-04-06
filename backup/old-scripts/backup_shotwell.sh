@@ -1,44 +1,40 @@
 #!/bin/bash
 #
-# Synkar från hemkatalogens script-katalog till NAS och usb-diskarna.
+# progress-feedback? Via "uxterm -e 'kommando'"?
+#
+# Synkar från /home/johan/.config/darktable till NAS och usb-diskarna.
 # --delete tar bort filer vid målet som ej finns i källan.
 #
 
-# set -e
-
-#
-# Definitioner
-#
-Source=$HOME/cloud-storage/onedrive/scripts
-# DevSource=$HOME/backup_nas/scripts
-Target=$HOME/backup_nas
+Source=$HOME/.var/app/org.gnome.Shotwell/data/shotwell/data
+Target=$HOME/backup_nas/shotwell
 DevSource="//ng-nas/backup"
 Try="`cat /etc/mtab |grep backup_nas|awk '{print $1}'|grep ng-nas`"
-OneTB_ntfs=/media/johan/OneTB_ntfs/backup
-#ExtDiskTwo=/media/johan/backup-ext/backup
-onedrive=$HOME/cloud-storage/onedrive/backup
+OneTB_ntfs=/media/johan/OneTB_ntfs/backup/shotwell
+#ExtDiskTwo=/media/johan/backup-ext/backup/shotwell
+onedrive=$HOME/cloud-storage/onedrive/backup/shotwell
+#GoogleDrive=$HOME/gdrive/backup/shotwell
 
-#
-# Kollar om NAS:en är monterad.
+
 if [ "$DevSource" = "$Try" ]; then
     echo "=========================================================="
     echo "Speglar till ng-nas:"
     echo "=========================================================="
-    /usr/bin/rsync -hlrvtz --progress --delete $Source $Target
+    /usr/bin/rsync -hlrtvz --progress --delete $Source $Target
     Nas_Success=1; 
 else
     echo "=========================================================="
     echo "Enheten $DevSource är ej monterad på $Source, synkar ej denna."
     echo "=========================================================="
-    Nas_Success=0; 
+    Nas_Success=0
 fi
 
 # Synka till OneTB_ntfs om den är monterad, annars avbryt:
 if [ -d "$OneTB_ntfs" ]; then
     echo "=========================================================="
-    echo "Speglar till OneTB-disken:"
+    echo "Speglar till OneTB_ntfs:"
     echo "=========================================================="
-    /usr/bin/rsync -hlrvtz --progress --delete $Source $OneTB_ntfs
+    /usr/bin/rsync -hlrtvz --progress --delete $Source $OneTB_ntfs
     OneTB_ntfs_Success=1; 
 else
     echo "=========================================================="
@@ -52,7 +48,7 @@ fi
 #    echo "=========================================================="
 #    echo "Speglar till ExtDiskTwo:"
 #    echo "=========================================================="
-#    /usr/bin/rsync -hlrtvz --progress --delete $Source $ExtDiskTwo    
+#    /usr/bin/rsync -hlrtvz --progress --delete $Source $ExtDiskTwo
 #    ExtDiskTwo_Success=1; 
 #else
 #    echo "=========================================================="
@@ -75,9 +71,9 @@ else
     onedrive_Success=0
 fi
 
-echo "Scripts, "`date` "till NAS ($Nas_Success), OneTB_ntfs ($OneTB_ntfs_Success), onedrive ($onedrive_Success)" >> ~/Backup_dates_disks.txt
+echo "Shotwell, "`date` "till NAS ($Nas_Success), OneTB_ntfs ($OneTB_ntfs_Success), onedrive ($onedrive_Success)" >> ~/Backup_dates_disks.txt
 
-#echo "Scripts, "`date` "till NAS ($Nas_Success), OneTB_ntfs ($OneTB_ntfs_Success), ExtDiskTwo ($ExtDiskTwo_Success), onedrive ($onedrive_Success)" >> ~/Backup_dates_disks.txt
+#echo "Shotwell, "`date` "till NAS ($Nas_Success), OneTB_ntfs ($OneTB_ntfs_Success), ExtDiskTwo ($ExtDiskTwo_Success), onedrive ($onedrive_Success)" >> ~/Backup_dates_disks.txt
 
 echo "=========================================================="
 echo " Sammanställning av synk av följande enheter enligt nedan:"

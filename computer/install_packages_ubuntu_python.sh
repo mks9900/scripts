@@ -53,8 +53,6 @@ sudo apt install geeqie gimp-edge gimp-gmic mozo rawtherapee-unstable cifs-utils
 
 # De två paketen python-pkg-resources python-setuptools behövs för Apples CoreML.
 
-sudo snap install hiri
-
 # Avinstallera lite program:
 sudo apt remove chromium-browser 
 

@@ -6,14 +6,14 @@
 # --delete tar bort filer vid målet som ej finns i källan.
 #
 
-Source=$HOME/Dropbox/coding
+Source=$HOME/onedrive/coding
 Target=$HOME/backup_nas
 DevSource="//ng-nas/backup"
 Try="`cat /etc/mtab |grep backup_nas|awk '{print $1}'|grep ng-nas`"
 OneTB_ntfs=/media/johan/OneTB_ntfs/backup
 #ExtDiskTwo=/media/johan/backup-ext/backup
 #GoogleDrive=$HOME/gdrive/backup
-Dropbox=$HOME/Dropbox/backup
+onedrive=$HOME/onedrive/backup
 
 if [ "$DevSource" = "$Try" ]; then
     echo "=========================================================="
@@ -56,18 +56,18 @@ fi
 #    ExtDiskTwo_Success=0;
 #fi
 
-# Synka till Dropbox om den är monterad, annars avbryt:
-if [ -d "$Dropbox" ]; then
+# Synka till onedrive om den är monterad, annars avbryt:
+if [ -d "$onedrive" ]; then
     echo "=========================================================="
-    echo "Speglar till Dropbox:"
+    echo "Speglar till onedrive:"
     echo "=========================================================="
-    /usr/bin/rsync -hlrtvz --progress --delete $Source $Dropbox
-    Dropbox_Success=1; 
+    /usr/bin/rsync -hlrtvz --progress --delete $Source $onedrive
+    onedrive_Success=1; 
 else
     echo "=========================================================="
-    echo "Dropbox är ej monterad, synkar ej denna."
+    echo "onedrive är ej monterad, synkar ej denna."
     echo "=========================================================="
-    Dropbox_Success=0
+    onedrive_Success=0
 fi
 
 # Synka till GoogleDrive om den är monterad, annars avbryt:
@@ -86,14 +86,14 @@ fi
 
 # echo "Bilder," `date`" till $enhet" >> ~/Backup_dates_disks.txt
 
-echo "Darktable, "`date` "till NAS ($Nas_Success), OneTB_ntfs ($OneTB_ntfs_Success), Dropbox ($Dropbox_Success)" >> ~/Backup_dates_disks.txt
-#echo "Darktable, "`date` "till NAS ($Nas_Success), OneTB_ntfs ($OneTB_ntfs_Success), ExtDiskTwo ($ExtDiskTwo_Success), Dropbox ($Dropbox_Success)" >> ~/Backup_dates_disks.txt
+echo "Darktable, "`date` "till NAS ($Nas_Success), OneTB_ntfs ($OneTB_ntfs_Success), onedrive ($onedrive_Success)" >> ~/Backup_dates_disks.txt
+#echo "Darktable, "`date` "till NAS ($Nas_Success), OneTB_ntfs ($OneTB_ntfs_Success), ExtDiskTwo ($ExtDiskTwo_Success), onedrive ($onedrive_Success)" >> ~/Backup_dates_disks.txt
 
 echo "=========================================================="
 echo " Sammanställning av synk av följande enheter enligt nedan:"
 echo " $Source till $Target: $Nas_Success"
 echo " $Source till $OneTB_ntfs: $OneTB_ntfs_Success"
 #echo " $Source till $ExtDiskTwo: $ExtDiskTwo_Success"
-echo " $Source till $Dropbox: $Dropbox_Success"
+echo " $Source till $onedrive: $onedrive_Success"
 #echo " $Source till $GoogleDrive: $GoogleDrive_Success"
 echo "=========================================================="

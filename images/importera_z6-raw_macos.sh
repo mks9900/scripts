@@ -2,7 +2,8 @@
 
 Source=/Volumes/"NIKON Z 6"/DCIM/100NCZ_6
 Target=/Volumes/Raw_photos/raws/imports
-PhotoPath=/Volumes/Raw_photos/raws/"Lightroom CC"/02fbfd9b03384e0e80642b882c22a79b/originals/
+PhotoPath=/Volumes/Raw_photos/raws/
+# PhotoPath=/Volumes/Raw_photos/raws/"Lightroom CC"/02fbfd9b03384e0e80642b882c22a79b/originals/
 
 clear
 
@@ -96,7 +97,7 @@ fi
 echo
 echo
 echo "==================================================================================="
-echo "Filerna kopieras till rätt kataloger i foto-strukturen, baserat på yyyy/yyyy-mm-dd."
+echo "Filerna flyttas till rätt kataloger i foto-strukturen, baserat på yyyy/yyyy-mm-dd."
 echo "==================================================================================="
 
 # Varför visas ej pwd nedan?

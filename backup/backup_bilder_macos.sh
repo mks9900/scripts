@@ -6,9 +6,9 @@
 # --delete tar bort filer vid målet som ej finns i källan.
 #
 
-Source=/Volumes/Raw_photos/raws/"Lightroom CC"/02fbfd9b03384e0e80642b882c22a79b/originals/2005/
+Source=/Volumes/Raw_photos/raws/"Lightroom CC"/02fbfd9b03384e0e80642b882c22a79b/originals/
 
-Target="/Volumes/backup/Pictures/Raw_photos/2005"
+Target="/Volumes/backup/Pictures/Raw_photos/"
 
 mount_test="/Volumes/Raw_photos"
 

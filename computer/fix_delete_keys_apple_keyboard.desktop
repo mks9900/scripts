@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=FixKeys
+Name[sv]=FixKeys
+Comment=FixKeys: makes eject-button "delete" on apple keyboard
+Comment[sv]=FixKeys: makes eject-button "delete" on apple keyboard
+Exec=/home/johanthor/scripts/computer/fix_delete_key.sh
+Terminal=true
+Categories=X-Debian-Applications-System-Administration;

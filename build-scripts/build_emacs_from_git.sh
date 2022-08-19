@@ -5,7 +5,7 @@ cd /home/johanthor/program/emacs-git-code
 echo "\Updating emacs..."
 git pull
 
-echo "\Configuring emacs..."
+echo "\nConfiguring emacs..."
 ./configure --with-pgtk --prefix=/home/johanthor/program/emacs
 
 echo "\nBuilding emacs..."

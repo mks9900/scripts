@@ -133,7 +133,7 @@ cmake \
     -DBUILD_BUNDLE="ON" \
     -DBUNDLE_BASE_INSTALL_DIR="${installDir}" \
     -DOPTION_OMP="ON" \
-    -DWITH_LTO="ON" \
+    -DWITH_LTO="OFF" \
     -DWITH_PROF="OFF" \
     -DWITH_SAN="OFF" \
     -DWITH_SYSTEM_KLT="OFF" \

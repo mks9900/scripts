@@ -8,11 +8,11 @@ echo "\n### Installing updated gtk theme:"
 # --theme = theme accent, "black" = dark mode
 # ./install.sh --theme red -c --black
 
-./install.sh -c dark -c light --theme red --theme blue --theme green --icon ubuntu
+./install.sh -c Dark --theme red --theme blue --theme green --icon ubuntu
 
 echo "\n### Installing updated firefox theme, flatpak and snap:"
 # ./tweak.sh
-./tweaks.sh --flatpak --firefox --snap --background default --color dark --theme red 
+./tweaks.sh --flatpak --firefox --snap --background default --color Dark --theme red 
 
 ./install.sh --theme red --theme blue --icon ubuntu --libadwaita
 
@@ -31,9 +31,7 @@ echo "\n### Installing updated icon theme:"
 # --theme = theme accent, "black" = dark mode
 # ./install.sh --theme red -c --black
 
-./install.sh --theme red --theme red --theme green --theme purple --theme orange --bold
-
-./install.sh --theme red --theme red --bold
+./install.sh --theme red --theme purple --bold
 
 
 echo "\n### Done updating!"

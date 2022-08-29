@@ -9,8 +9,8 @@ Tstart="$(date +%s)"
 #
 # Definitioner:
 #
-source=$HOME/rt-dev_source
-baseTargetPath="$HOME/rt"
+source=$HOME/program/code-rawtherapee-jt
+baseTargetPath="$HOME/program/rt"
 wasteBin=$HOME/.local/share/Trash/files
 
 cd $source

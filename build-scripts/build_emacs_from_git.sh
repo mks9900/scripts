@@ -2,7 +2,7 @@
 
 cd /home/johanthor/program/emacs-git-code
 
-echo "\Updating emacs..."
+echo "\nUpdating emacs..."
 git pull
 
 echo "\nConfiguring emacs..."

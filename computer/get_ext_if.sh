@@ -1,7 +1,7 @@
 #!/bin/zsh
 #
 # Namnger textfil:
-ipFile=$HOME/onedrive_privat/ext_ip.txt
+ipFile=$HOME/pCloudDrive/ext_ip.txt
 writtenIP="`cat $ipFile`"
 
 # Få tag i den externa adressen:

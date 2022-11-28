@@ -47,25 +47,33 @@ echo "==========================================================================
 echo "Vill du vill du städa från förra kompileringen?"
 select svar in  Ja Nej; do
     case $svar in
-	Ja ) echo "========================================================================" 
+	Ja ) echo "========================================================================"
 	     echo "Ok, kör make clean före make install:";
 	     cd $source
 	     rm -rf build
 	     mkdir build
 	     cd build
 	     echo "Konfigurerar RawTherapee:"
-	     echo "====================================================================" 
+	     echo "===================================================================="
 
 	     cmake -DCMAKE_BUILD_TYPE="$buildType" \
 		   -DPROC_TARGET_NUMBER="2" \
 		   -DBUILD_BUNDLE="ON" \
 		   -DCACHE_NAME_SUFFIX="5-dev" \
+		   -DOPTION_OMP="ON" \
+		   -DWITH_PROF="OFF" \
+		   -DWITH_SAN="OFF" \
+		   -DWITH_SYSTEM_KLT="OFF" \
+		   -DWITH_BENCHMARK="OFF" \
 		   -DWITH_LTO="OFF" \
-		   ..
+		   -DNDEBUG="OFF" \
+		   -DWITH_LTO="OFF" \
+		   "$HOME/program/code-rawtherapee-jt" || exit 1
+
 
 	     echo "===================================================================="
 	     break;;
-	
+
 	Nej ) echo "Ok, städar inte utan kör make install direkt nu."; break;;
     esac
 done

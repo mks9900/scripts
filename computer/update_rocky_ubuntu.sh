@@ -18,8 +18,9 @@ cd ~/.pyenv/plugins/pyenv-virtualenv
 cd ~
 
 echo "\n### Updating apt repos:"
-sudo apt -qq update
-sudo apt upgrade
+# sudo apt -qq update
+# sudo apt upgrade
+sudo nala upgrade
 
 echo "\n### Autoremove obsolete apt-packages :"
 sudo apt autoremove -y

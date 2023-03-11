@@ -1,11 +1,8 @@
 #!/bin/zsh
 
 Source=/media/johanthor/"NIKON Z 6"/DCIM/100NCZ_6/
-# /Volumes/"NIKON Z 6"/DCIM/100NCZ_6
 Target=/home/johanthor/tmp/import-z6-raw/
-# /Volumes/Raw_photos/raws/imports
 PhotoPath=/home/johanthor/Pictures/Raw/
-# /Volumes/Raw_photos/raws/
 
 clear
 
@@ -30,7 +27,7 @@ else
 
 	echo
 	echo "==================================================================================="
-	echo "Flyttar alla råfiler till målet:" #samt att vi kollar vad tiden är så vi kan räkna ut hur lång tid allt tog i slutet:
+	echo "Flyttar alla råfiler till målet:" 
 	echo "==================================================================================="
 
 	Amount="$(du -chsm $Source|awk '{print $1}'|head -1|sed -e 's/M//'|sed -e "s/\(\.[0-9]\).*/\1/g")"
@@ -106,19 +103,18 @@ echo "==========================================================================
 # Kan även denna slås samman med den större for-loopen ovan?
 
 for TempDir in *; do
-    echo $TempDir
+    # echo $TempDir
     CurrentDirectory=$(pwd)
     Year="$(ls |sort|awk '{print $1}'|cut -c1-4|head -1)"
     if [ ! -d "$PhotoPath"/"$Year"/"$TempDir" ]; then
-	echo "Katalogen finns ej: Flyttar hela katalogen..."
-	mv -vi "$TempDir"/ "$PhotoPath"/"$Year"
-	echo
+		echo "Katalogen finns ej: Flyttar hela katalogen..."
+		mv -vi "$TempDir"/ "$PhotoPath"/"$Year"
+		echo
     else
-	echo "Katalogen finns: Kopierar filerna till katalogen..."
-	cp -ai "$TempDir"/*.nef "$PhotoPath"/"$Year"/"$TempDir"
-	echo "Städa manuellt undan bilderna i $TempDir!"
-	echo
-
+		echo "Katalogen finns: Kopierar filerna till katalogen..."
+		cp -ai "$TempDir"/*.nef "$PhotoPath"/"$Year"/"$TempDir"
+		echo "Städa manuellt undan bilderna i $TempDir!"
+		echo
     fi
 done
 

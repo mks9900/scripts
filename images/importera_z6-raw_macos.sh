@@ -1,8 +1,8 @@
 #!/bin/zsh
 
 Source=/Volumes/"NIKON Z 6"/DCIM/100NCZ_6
-Target=/Volumes/raw_photos/Raw/imports
-PhotoPath=/Volumes/raw_photos/Raw
+Target=/Users/johanthor/Pictures/photo_import_tmp
+PhotoPath=/Users/johanthor/Pictures/photo_imports
 
 clear
 
@@ -27,7 +27,6 @@ else
 
 	echo
 	echo "==================================================================================="
-	# Nedan flyttar, samt kollar vad tiden är så vi kan räkna ut hur lång tid allt tog i slutet:
 	echo "Flyttar alla råfiler till målet:" 
 	echo "==================================================================================="
 
@@ -53,7 +52,6 @@ else
 	echo "==================================================================================="
 	echo "Döper om varje fil till något mer meningsfullt:"
 	echo "==================================================================================="
-
 
 	# Felhantering för *.NEF finns nedan:
 
@@ -105,7 +103,7 @@ echo "==========================================================================
 # Kan även denna slås samman med den större for-loopen ovan?
 
 for TempDir in *; do
-    echo $TempDir
+    # echo $TempDir
     CurrentDirectory=$(pwd)
     Year="$(ls |sort|awk '{print $1}'|cut -c1-4|head -1)"
     if [ ! -d "$PhotoPath"/"$Year"/"$TempDir" ]; then
@@ -117,7 +115,6 @@ for TempDir in *; do
 		cp -ai "$TempDir"/*.nef "$PhotoPath"/"$Year"/"$TempDir"
 		echo "Städa manuellt undan bilderna i $TempDir!"
 		echo
-		
     fi
 done
 

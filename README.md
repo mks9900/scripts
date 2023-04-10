@@ -1,2 +1,2 @@
 # scripts
-My own bash and zsh-scripts.
+My own bash- and zsh-scripts.

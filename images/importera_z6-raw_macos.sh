@@ -10,25 +10,25 @@ clear
 
 # Felhantering för mål- och källkataloger:
 if [ ! -d "$Source" ]; then
-    echo "==================================================================================="
+    echo "=============================================================================="
     echo "Katalogen" $Source "finns ej, förmodligen är kortet ej monterat. Avbryter."
-    echo "==================================================================================="
+    echo "=============================================================================="
     exit ;
 else
 
     if [ ! -d "$Target" ]; then
-	echo "==================================================================================="
+	echo "=========================================================================="
 	echo "Katalogen" $Target "finns ej, förmodligen är disken ej monterad. Avbryter."
-	echo "==================================================================================="
+	echo "=========================================================================="
 	exit ;
     else
 
 # TODO: Felhantering om det redan finns kataloger/filer i import som är samma som på kortet!
 
 	echo
-	echo "==================================================================================="
+	echo "=========================================================================="
 	echo "Flyttar alla råfiler till målet:" 
-	echo "==================================================================================="
+	echo "=========================================================================="
 
 	Amount="$(du -chsm $Source|awk '{print $1}'|head -1|sed -e 's/M//'|sed -e "s/\(\.[0-9]\).*/\1/g")"
 	#Amount="$(echo "$Amount2"|sed -e "s/\(\.[0-9]\).*/\1/g")"
@@ -49,9 +49,9 @@ else
 	echo "Det finns $Count flyttade NEF-filer."
 	echo
 	echo
-	echo "==================================================================================="
+	echo "========================================================================="
 	echo "Döper om varje fil till något mer meningsfullt:"
-	echo "==================================================================================="
+	echo "========================================================================="
 
 	# Felhantering för *.NEF finns nedan:
 
@@ -62,8 +62,8 @@ else
 
 	    Counter=1
 	    for RawFile in "$Target"/*.NEF; do
-        # OBS! exiv2 ändrar format beroende på vilket språk terminalen har...
-        # Man kan alltså få ändra $x nedan:
+                # OBS! exiv2 ändrar format beroende på vilket språk terminalen har...
+                # Man kan alltså få ändra $x nedan:
 		FileDate="`exiv2 "$RawFile"|grep timestamp|awk '{print $4}'|sed -e 's/:/-/g'`"
 		FileTime="`exiv2 "$RawFile"|grep timestamp|awk '{print $5}'|sed -e 's/:/-/g'`" #|cut -c1-5`" #skär bort sekundrarna...
 		FocalLength="`exiv2 "$RawFile"|grep length|awk '{print $4}'|cut -d'.' -f1`"
@@ -95,9 +95,9 @@ fi
 
 echo
 echo
-echo "==================================================================================="
-echo "Filerna kopieras/flyttas till rätt kataloger i foto-strukturen, baserat på yyyy/yyyy-mm-dd."
-echo "==================================================================================="
+echo "================================================================================="
+ echo "Filerna kopieras/flyttas till rätt kataloger i foto-strukturen, baserat på yyyy/yyyy-mm-dd."
+echo "================================================================================="
 
 # Varför visas ej pwd nedan?
 # Kan även denna slås samman med den större for-loopen ovan?
@@ -122,13 +122,15 @@ done
 Ttotal="$(($(date +%s)-Tstart))"
 
 TransferRate="$(echo $Amount / $Ttrans|bc -l)"
+# printf %.2f $(echo "$float/1.18" | bc -l)
+# echo "scale=2; 100/3" | bc
 
 echo
 echo
-echo "==================================================================================="
-echo -e "Överförde $Count filer från om $Amount Mbyte på $Ttrans sekunder."
-echo -e "\n($TransferRate Mbyte per sekund)."
+echo "================================================================================="
+echo -e "Överförde $Count filer om totalt $Amount Mbyte på $Ttrans sekunder."
+echo -e "\nscale=2; ($TransferRate Mbyte per sekund)."
 #echo -e "Överförde filerna från "$Source" till $Target."
 echo
 echo "Hela importen tog $Ttotal sekunder."
-echo "==================================================================================="
+echo "================================================================================="

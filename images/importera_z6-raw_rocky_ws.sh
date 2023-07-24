@@ -79,6 +79,8 @@ else
 #		FileName=$FileDate"_kl-"$FileTime"_"$LensMaker"_"$FocalLength""mm_ISO$ISOSpeed"_"$Aperture
 		FileName=$FileDate"_kl"$FileTime"_"$CameraModel"_"$FocalLength"mm_"$Aperture"_ISO""$ISOSpeed"
 
+		# echo $FileDate
+
 		if [ ! -d "$FileDate" ]; then
 		    Counter=1
 		    mkdir -p "$FileDate"
@@ -108,6 +110,8 @@ echo "==========================================================================
 for TempDir in *; do
     echo $TempDir
     CurrentDirectory=$(pwd)
+	# Nedan funkar inte om det finns fler år, där något år inte skapats än. T.ex.
+	# bilder från både 2022 och 2023.
     Year="$(ls |sort|awk '{print $1}'|cut -c1-4|head -1)"
     if [ ! -d "$PhotoPath"/"$Year"/"$TempDir" ]; then
 	echo "Katalogen finns ej: Flyttar hela katalogen..."

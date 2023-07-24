@@ -18,12 +18,13 @@ cd ~/.pyenv/plugins/pyenv-virtualenv
 cd ~
 
 echo "\n### Updating apt repos:"
-# sudo apt -qq update
-# sudo apt upgrade
-sudo nala upgrade
+sudo apt -qq update
+sudo apt upgrade
+# sudo nala upgrade
 
-echo "\n### Autoremove obsolete apt-packages :"
+echo "\n### Autoremove obsolete apt-packages:"
 sudo apt autoremove -y
+# sudo nala autoremove
 
 echo "\n### Updating Snap:"
 sudo snap refresh
@@ -31,9 +32,9 @@ sudo snap refresh
 echo "\n### Updating Flatpak:"
 sudo flatpak -y update
 
-echo "\n### Updating brew:"
-brew update --quiet
-brew upgrade
-brew cleanup
+# echo "\n### Updating brew:"
+# brew update --quiet
+# brew upgrade
+# brew cleanup
 
 echo "\n### Done!"

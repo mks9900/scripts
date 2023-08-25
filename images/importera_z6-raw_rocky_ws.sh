@@ -1,15 +1,16 @@
 #!/bin/zsh
 
-Source=/media/johanthor/"NIKON Z 6"/DCIM/100NCZ_6/
-Target=/home/johanthor/tmp/import-z6-raw/
-PhotoPath=/home/johanthor/Pictures/Raw/
+MountTest=/media/johanthor/NIKON\ Z\ 6/
+Source=/media/johanthor/NIKON\ Z\ 6/DCIM/101NCZ_6/
+Target=/home/johanthor/raid_storage/Pictures/import_tmp/
+PhotoPath=/home/johanthor/Nextcloud/Photos/raw_photos
 
 clear
 
 #set -e
 
 # Felhantering för mål- och källkataloger:
-if [ ! -d "$Source" ]; then
+if [ ! -d "$MountTest" ]; then
     echo "==================================================================================="
     echo "Katalogen" $Source "finns ej, förmodligen är kortet ej monterat. Avbryter."
     echo "==================================================================================="
@@ -27,7 +28,7 @@ else
 
 	echo
 	echo "==================================================================================="
-	echo "Flyttar alla råfiler till målet:" 
+	echo "Flyttar alla råfiler till målet:"
 	echo "==================================================================================="
 
 	Amount="$(du -chsm $Source|awk '{print $1}'|head -1|sed -e 's/M//'|sed -e "s/\(\.[0-9]\).*/\1/g")"
@@ -100,9 +101,6 @@ echo
 echo "==================================================================================="
 echo "Filerna kopieras/flyttas till rätt kataloger i foto-strukturen, baserat på yyyy/yyyy-mm-dd."
 echo "==================================================================================="
-
-# Varför visas ej pwd nedan?
-# Kan även denna slås samman med den större for-loopen ovan?
 
 for TempDir in *; do
     # echo $TempDir

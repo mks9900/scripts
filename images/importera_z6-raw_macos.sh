@@ -27,7 +27,7 @@ else
 
 	echo
 	echo "=========================================================================="
-	echo "Flyttar alla råfiler till målet:" 
+	echo "Flyttar alla råfiler till målet:"
 	echo "=========================================================================="
 
 	Amount="$(du -chsm $Source|awk '{print $1}'|head -1|sed -e 's/M//'|sed -e "s/\(\.[0-9]\).*/\1/g")"
@@ -96,11 +96,8 @@ fi
 echo
 echo
 echo "================================================================================="
- echo "Filerna kopieras/flyttas till rätt kataloger i foto-strukturen, baserat på yyyy/yyyy-mm-dd."
+echo "Filerna kopieras/flyttas till rätt kataloger i foto-strukturen, baserat på yyyy/yyyy-mm-dd."
 echo "================================================================================="
-
-# Varför visas ej pwd nedan?
-# Kan även denna slås samman med den större for-loopen ovan?
 
 for TempDir in *; do
     # echo $TempDir

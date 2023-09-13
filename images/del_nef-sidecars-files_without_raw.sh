@@ -2,7 +2,7 @@
 
 # Flyttar alla sidecar-filer som ej har en tillhörande Nikon nef-fil till papperskorgen.
 
-RecursePath="$HOME/Pictures/Fotografier"
+RecursePath="$HOME/Nextcloud/Photos/raw_photos"
 
 # För tester:
 #RecursePath="$HOME/tmp"
@@ -20,7 +20,7 @@ recurse ()
 
 	    SubBaseName="${FileNameWOExt%.*}"
 	    SubExtension="${FileNameWOExt##*.}"
-	    
+
 	    Nef="$FileNameWOExt".nef
 	    NEF="$FileNameWOExt".NEF
 	    SubNef="$SubBaseName".nef

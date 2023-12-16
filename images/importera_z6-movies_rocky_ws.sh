@@ -1,16 +1,16 @@
 #!/bin/zsh
 
-Source=/media/johanthor/"NIKON Z 6"/DCIM/100NCZ_6/
-Target=/home/johanthor/tmp/import-z6-raw/movies
-PhotoPath=/home/johanthor/hdd_storage/icloud_exif_photos
-
+MountTest=/media/johanthor/NIKON\ Z\ 6/
+Source=/media/johanthor/NIKON\ Z\ 6/DCIM/101NCZ_6/
+Target=/home/johanthor/raid_storage/Pictures/import_tmp/
+PhotoPath=/home/johanthor/Nextcloud/Photos/raw_movies
 
 clear
 
 #set -e
 
 # Felhantering för mål- och källkataloger:
-if [ ! -d "$Source" ]; then
+if [ ! -d "$MountTest" ]; then
     echo "==================================================================================="
     echo "Katalogen" $Source "finns ej, förmodligen är kortet ej monterat. Avbryter."
     echo "==================================================================================="
@@ -98,32 +98,50 @@ echo "==========================================================================
 echo "Filerna kopieras/flyttas till rätt kataloger i foto-strukturen, baserat på yyyy/yyyy-mm-dd."
 echo "==================================================================================="
 
-for YearDir in *; do
+# for YearDir in *; do
+#     # echo $TempDir
+#     # CurrentDirectory=$(pwd)
+#     # Year="$(ls |sort|awk '{print $1}'|cut -c1-4|head -1)"
+# 	cd $YearDir
+# 	# pwd
+
+# 	for DateDir in *; do # == e.g. 2022-12-14
+# 		cd $DateDir
+# 		# ls
+# 		Year="`exiftool *.mov|grep 'Create Date'|awk '{print $5}'|head -n1|cut -c1-4`"
+# 		# echo "$Year"
+# 		pwd
+# 		cd ..
+# 		if [ ! -d "$PhotoPath"/"$Year"/"$DateDir" ]; then
+# 			echo "Katalogen finns ej: Flyttar hela katalogen..."
+# 			mv -vi "$DateDir"/ "$PhotoPath"/"$Year"
+# 			echo
+# 		else
+# 			echo "Katalogen finns: Kopierar filerna till katalogen..."
+# 			cp -ai "$DateDir"/*.mov "$PhotoPath"/"$Year"/"$DateDir"
+# 			echo "Städa manuellt undan bilderna i ~/tmp/$DateDir!"
+# 			echo
+# 		fi
+# 	done
+
+# done
+
+for TempDir in *; do
     # echo $TempDir
     # CurrentDirectory=$(pwd)
-    # Year="$(ls |sort|awk '{print $1}'|cut -c1-4|head -1)"
-	cd $YearDir
-	pwd
-
-	for DateDir in *; do # == e.g. 2022-12-14
-		cd $DateDir
-		# ls
-		Year="`exiftool *.mov|grep 'Create Date'|awk '{print $5}'|head -n1|cut -c1-4`"
-		# echo "$Year"
-		pwd
-		cd ..
-		if [ ! -d "$PhotoPath"/"$Year"/"$DateDir" ]; then
-			echo "Katalogen finns ej: Flyttar hela katalogen..."
-			mv -vi "$DateDir"/ "$PhotoPath"/"$Year"
-			echo
-		else
-			echo "Katalogen finns: Kopierar filerna till katalogen..."
-			cp -ai "$DateDir"/*.mov "$PhotoPath"/"$Year"/"$DateDir"
-			echo "Städa manuellt undan bilderna i ~/tmp/$DateDir!"
-			echo
-		fi
-	done
-
+	# Nedan funkar inte om det finns fler år, där något år inte skapats än. T.ex.
+	# bilder från både 2022 och 2023.
+    Year="$(ls |sort|awk '{print $1}'|cut -c1-4|head -1)"
+    if [ ! -d "$PhotoPath"/"$Year"/"$TempDir" ]; then
+		echo "Katalogen finns ej: Flyttar hela katalogen..."
+		mv -vi "$TempDir"/ "$PhotoPath"/"$Year"
+		echo
+    else
+		echo "Katalogen finns: Kopierar filerna till katalogen..."
+		cp -ai "$TempDir"/*.nef "$PhotoPath"/"$Year"/"$TempDir"
+		echo "Städa manuellt undan bilderna i $TempDir!"
+		echo
+    fi
 done
 
 # Här kollas den sista tiden och subtraherar den första så att totalen fås:

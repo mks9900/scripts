@@ -63,25 +63,24 @@ else
 			# Man kan alltså få ändra $x nedan:
 			FileDate="`exiftool "$Movie"|grep "Create Date"|awk '{print $5}'|sed -e 's/:/-/g'|head -n 1`"
 			FileTime="`exiftool "$Movie"|grep "Create Date"|awk '{print $6}'|sed -e 's/:/-/g'|head -n 1`"
-			FocalLength="`exiftool "$Movie"|grep "Focal Length"|awk '{print $4}'|sed -e 's/:/-/g'|head -n 1`"
-			ISOSpeed="`exiftool "$Movie"|grep "ISO"|head -n 1|awk '{print $3}'`"
-			Aperture="`exiftool "$Movie"|grep "Aperture"|head -n 1|awk '{print $4}'|sed -e s'/\.//'`"
 			CameraModel="`exiftool "$Movie"|grep "Model"|head -n 1|awk '{print $3,$4,$5}'|sed -e 's/ /_/g'`"
+			FocalLength="`exiftool "$Movie"|grep "Focal Length"|awk '{print $4}'|sed -e 's/:/-/g'|head -n 1`"
+			Aperture="`exiftool "$Movie"|grep "AF Aperture"|awk '{print $4}'|sed -e s'/\.//'`"
+			ISOSpeed="`exiftool "$Movie"|grep "ISO2"|head -n 1|awk '{print $3}'`"
 
-			FileName=$FileDate"_kl"$FileTime"_"$CameraModel"_"$FocalLength"mm_f"$Aperture"_ISO""$ISOSpeed"
+			FileName=$FileDate"_kl"$FileTime"_"$CameraModel"_"$FocalLength"mm_f"$Aperture""_ISO""$ISOSpeed
 
 			Year="`exiftool *.MOV|grep 'Create Date'|awk '{print $5}'|head -n1|cut -c1-4`"
 
-		if [ ! -d "$Year" ]; then
+		if [ ! -d "$FileDate" ]; then
 		    Counter=1
-			# echo "hej"
-			mkdir -p "$Year"/"$FileDate"
+			mkdir -p "$FileDate"
 			# mkdir -p $FileDate
-		    mv -v "$Movie" "$Year"/"$FileDate"/"$FileName""_"$Counter.mov
+		    mv -v "$Movie" "$FileDate"/"$FileName""_"$Counter.mov
 		    Counter=$[Counter + 1]
 
 		else
-			mv -v "$Movie" "$Year"/"$FileDate"/"$FileName""_"$Counter.mov
+			mv -v "$Movie" "$FileDate"/"$FileName""_"$Counter.mov
 		    # echo "$FileDate"/"$FileName""_"$Counter.mov
 		    Counter=$[Counter + 1]
 		fi

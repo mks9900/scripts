@@ -84,7 +84,7 @@ else
 		    Counter=$[Counter + 1]
 		else
 		    mv -v "$RawFile" "$FileDate"/"$FileName""_"$Counter.nef
-		    echo "$FileDate"/"$FileName""_"$Counter.nef
+		    # echo "$FileDate"/"$FileName""_"$Counter.nef
 		    Counter=$[Counter + 1]
 		fi
 

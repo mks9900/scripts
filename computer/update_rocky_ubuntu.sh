@@ -32,9 +32,9 @@ sudo snap refresh
 echo "\n### Updating Flatpak:"
 sudo flatpak -y update
 
-# echo "\n### Updating brew:"
-# brew update --quiet
-# brew upgrade
-# brew cleanup
+echo "\n### Updating brew:"
+brew update --quiet
+brew upgrade
+brew cleanup
 
 echo "\n### Done!"
